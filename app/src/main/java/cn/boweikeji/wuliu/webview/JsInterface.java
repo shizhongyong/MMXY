@@ -116,8 +116,6 @@ public class JsInterface {
 
 		Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 		if (intent.resolveActivity(activity.getPackageManager()) != null) {
-			activity.startActivityForResult(intent, RC_CAPTURE);
-
 			File photoFile = null;
 			try {
 				photoFile = createImageFile(activity);
@@ -148,6 +146,7 @@ public class JsInterface {
 
 		// Save a file: path for use with ACTION_VIEW intents
 		mCurrentPhotoPath = image.getAbsolutePath();
+		image.deleteOnExit();
 		return image;
 	}
 
