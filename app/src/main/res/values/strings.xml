@@ -3,4 +3,6 @@
     <string name="home_page">http://39.104.162.185:3389/app/app/startPage</string>
 
     <string name="msg_exit_app">再按一次退出APP！</string>
+
+    <string name="msg_scan">扫码</string>
 </resources>

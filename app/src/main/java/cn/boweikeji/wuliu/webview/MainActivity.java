@@ -14,6 +14,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.GeolocationPermissions;
 import android.webkit.SslErrorHandler;
 import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
@@ -31,10 +32,30 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TEL = "tel:";
 
+    private JsInterface.CallBack mJsInterfaceCallBack = new JsInterface.CallBack() {
+        @Override
+        public void invokeJsMethod(String method, String data) {
+            if (TextUtils.isEmpty(method)) {
+                return;
+            }
+
+            StringBuilder builder = new StringBuilder();
+            builder.append("javascript:");
+            builder.append(method);
+            builder.append("(\"");
+            if (data != null) {
+                builder.append(data);
+            }
+            builder.append("\")");
+            mWebView.loadUrl(builder.toString());
+        }
+    };
+
     private WebView mWebView;
     private ProgressBar mProgressBar;
 
     private CustomChromeClient mWebChromeClient;
+    private JsInterface mJsInterface;
 
     private long mLastBackTime;
 
@@ -43,6 +64,9 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (mWebChromeClient != null) {
             mWebChromeClient.onFileChooserResult(requestCode, resultCode, data);
+        }
+        if (mJsInterface != null) {
+            mJsInterface.onActivityResult(requestCode, resultCode, data);
         }
     }
 
@@ -85,6 +109,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
+        Log.e(TAG, "onDestroy");
         try {
             // 先清空，再删除
             mWebView.loadDataWithBaseURL(null, "", "text/html", "utf-8", null);
@@ -107,6 +132,9 @@ public class MainActivity extends AppCompatActivity {
         settings.setAppCacheEnabled(true);
         settings.setCacheMode(WebSettings.LOAD_DEFAULT);
         settings.setDomStorageEnabled(true);
+
+        mJsInterface = new JsInterface(this, mJsInterfaceCallBack);
+        mWebView.addJavascriptInterface(mJsInterface, JsInterface.NAME);
 
         mWebChromeClient = new CustomChromeClient();
         mWebView.setWebChromeClient(mWebChromeClient);
@@ -226,6 +254,12 @@ public class MainActivity extends AppCompatActivity {
                     mUploadFile = null;
                 }
             }
+        }
+
+        @Override
+        public void onGeolocationPermissionsShowPrompt(String origin, GeolocationPermissions.Callback callback) {
+            callback.invoke(origin, true, false);
+            super.onGeolocationPermissionsShowPrompt(origin, callback);
         }
     }
 

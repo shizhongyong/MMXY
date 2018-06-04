@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>接口测试</title>
+</head>
+<body>
+<button id="scan" type="button" onclick="scan()">扫码</button>
+<p id="scan_result"></p>
+<button id="capture" type="button" onclick="capture()">拍照</button>
+<p id="capture_result"></p>
+<button id="location" type="button" onclick="getLocation()">定位</button>
+<p id="position_result"></p>
+
+<script type="text/javascript">
+	function scan() {
+		console.log("scan");
+		Native.scan("scanResult");
+	}
+
+	function capture() {
+		console.log("capture");
+		Native.capture("captureResult");
+	}
+
+	function getLocation() {
+		console.log("getLocation");
+		if (navigator.geolocation) {
+			navigator.geolocation.getCurrentPosition(showPosition);
+		} else {
+			document.getElementById("position_result").innerHTML="不支持获取地理位置";
+		}
+	}
+
+	function scanResult(content) {
+		document.getElementById("scan_result").innerHTML=content;
+	}
+
+	function captureResult(path) {
+		document.getElementById("capture_result").innerHTML=path;
+	}
+
+	function showPosition(position) {
+		var str = "纬度: " + position.coords.latitude + "<br>经度: " + position.coords.longitude;
+		document.getElementById("position_result").innerHTML=str;
+	}
+</script>
+
+</body>
+</html>
