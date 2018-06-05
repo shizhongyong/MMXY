@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
             builder.append(method);
             builder.append("(\"");
             if (data != null) {
-                builder.append(data);
+                builder.append(Uri.encode(data));
             }
             builder.append("\")");
             mWebView.loadUrl(builder.toString());
@@ -235,11 +235,13 @@ public class MainActivity extends AppCompatActivity {
                     Uri[] uris = null;
                     if (data != null && resultCode == Activity.RESULT_OK) {
                         String dataString = data.getDataString();
-                        ClipData clipData = data.getClipData();
-                        if (clipData != null) {
-                            uris = new Uri[clipData.getItemCount()];
-                            for (int i = 0; i < clipData.getItemCount(); i++) {
-                                uris[i] = clipData.getItemAt(i).getUri();
+                        if (Build.VERSION.SDK_INT >= 16) {
+                            ClipData clipData = data.getClipData();
+                            if (clipData != null) {
+                                uris = new Uri[clipData.getItemCount()];
+                                for (int i = 0; i < clipData.getItemCount(); i++) {
+                                    uris[i] = clipData.getItemAt(i).getUri();
+                                }
                             }
                         }
                         if (dataString != null) {

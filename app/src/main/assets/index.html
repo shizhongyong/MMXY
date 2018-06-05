@@ -9,8 +9,12 @@
 <p id="scan_result"></p>
 <button id="capture" type="button" onclick="capture()">拍照</button>
 <p id="capture_result"></p>
+<button id="album" type="button" onclick="album()">相册</button>
+<p id="album_result"></p>
 <button id="location" type="button" onclick="getLocation()">定位</button>
 <p id="position_result"></p>
+<p id="img_path"></p>
+<img src="" width="300px" height="300px" id="img1" alt="显示返回的图片">
 
 <script type="text/javascript">
 	function scan() {
@@ -23,6 +27,11 @@
 		Native.capture("captureResult");
 	}
 
+	function album() {
+		console.log("album");
+		Native.album("albumResult");
+	}
+
 	function getLocation() {
 		console.log("getLocation");
 		if (navigator.geolocation) {
@@ -33,17 +42,48 @@
 	}
 
 	function scanResult(content) {
-		document.getElementById("scan_result").innerHTML=content;
+		var el = document.getElementById("scan_result");
+		if (content) {
+			el.innerHTML = "扫码结果：" + content;
+		} else {
+			el.innerHTML = "扫码失败";
+		}
 	}
 
 	function captureResult(path) {
-		document.getElementById("capture_result").innerHTML=path;
+		var el = document.getElementById("capture_result");
+		if (path) {
+			el.innerHTML = path;
+			compressImage(path);
+		} else {
+			el.innerHTML = "拍照失败";
+		}
+	}
+
+	function albumResult(path) {
+		var el = document.getElementById("album_result");
+		if (path) {
+			el.innerHTML = path;
+			compressImage(path);
+		} else {
+			el.innerHTML = "选取照片失败";
+		}
 	}
 
 	function showPosition(position) {
 		var str = "纬度: " + position.coords.latitude + "<br>经度: " + position.coords.longitude;
 		document.getElementById("position_result").innerHTML=str;
 	}
+
+	function compressImage(path) {
+		Native.compressImage(path, 300, 300, 100, "compressResult");
+	}
+
+	function compressResult(path) {
+		document.getElementById("img_path").innerHTML = "压缩后图片路径：</br>" + path;
+		document.getElementById("img1").src = path;
+	}
+
 </script>
 
 </body>
