@@ -20,7 +20,6 @@ import java.lang.ref.WeakReference;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import cn.boweikeji.wuliu.webview.R;
 import cn.boweikeji.mmxy.util.ImageUtil;
 
 /**
