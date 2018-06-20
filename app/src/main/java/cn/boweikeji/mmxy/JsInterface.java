@@ -1,4 +1,4 @@
-package cn.boweikeji.wuliu.webview;
+package cn.boweikeji.mmxy;
 
 import android.app.Activity;
 import android.content.Context;
@@ -20,7 +20,8 @@ import java.lang.ref.WeakReference;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import cn.boweikeji.wuliu.webview.util.ImageUtil;
+import cn.boweikeji.wuliu.webview.R;
+import cn.boweikeji.mmxy.util.ImageUtil;
 
 /**
  * Created by shizy on 2018/6/4.

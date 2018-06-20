@@ -1,4 +1,4 @@
-package cn.boweikeji.wuliu.webview;
+package cn.boweikeji.mmxy;
 
 import android.app.Activity;
 import android.content.ClipData;
@@ -23,6 +23,8 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 import android.widget.Toast;
+
+import cn.boweikeji.wuliu.webview.R;
 
 public class MainActivity extends AppCompatActivity {
 

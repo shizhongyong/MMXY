@@ -1,4 +1,4 @@
-package cn.boweikeji.wuliu.webview.util;
+package cn.boweikeji.mmxy.util;
 
 import android.content.ContentUris;
 import android.content.Context;
