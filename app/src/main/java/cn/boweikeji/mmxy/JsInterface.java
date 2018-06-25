@@ -9,17 +9,23 @@ import android.os.Handler;
 import android.os.HandlerThread;
 import android.provider.MediaStore;
 import android.support.v4.content.FileProvider;
+import android.text.TextUtils;
+import android.util.Base64;
 import android.webkit.JavascriptInterface;
 
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import cn.boweikeji.mmxy.util.FileUtil;
 import cn.boweikeji.mmxy.util.ImageUtil;
 
 /**
@@ -118,7 +124,7 @@ public class JsInterface {
 		mCallBack.invokeJsMethod(mAlbumCallBack, uri == null ? null : ImageUtil.getImagePath(activity, uri));
 	}
 
-	private void sendCompressImageResult(final File target, final boolean success, final String callback) {
+	private void invokeJsMethodOnUiThread(final String result, final String callback) {
 		final Activity activity = mActivityRef.get();
 		if (activity == null) {
 			return;
@@ -128,7 +134,7 @@ public class JsInterface {
 			@Override
 			public void run() {
 				if (mCallBack != null) {
-					mCallBack.invokeJsMethod(callback, success ? target.getAbsolutePath() : null);
+					mCallBack.invokeJsMethod(callback, result);
 				}
 			}
 		});
@@ -259,16 +265,35 @@ public class JsInterface {
 		mThreadHandler.post(new Runnable() {
 			@Override
 			public void run() {
-				File target = null;
-				boolean success = false;
+				String result = null;
 				try {
-					target = createImageFile(activity);
-					success = ImageUtil.compressImage(path, target, targetW, targetH, quality);
+					File target = createImageFile(activity);
+					boolean success = ImageUtil.compressImage(path, target, targetW, targetH, quality);
+					if (success) {
+						result = FileUtil.base64File(target.getAbsolutePath());
+					}
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
-				sendCompressImageResult(target, success, callback);
+				invokeJsMethodOnUiThread(result, callback);
 			}
 		});
 	}
+
+	/**
+	 * 对文件进行base64加密
+	 *
+	 * @param path     文件路径
+	 * @param callback 回调函数名称
+	 */
+	@JavascriptInterface
+	public void base64File(final String path, final String callback) {
+		mThreadHandler.post(new Runnable() {
+			@Override
+			public void run() {
+				invokeJsMethodOnUiThread(FileUtil.base64File(path), callback);
+			}
+		});
+	}
+
 }

@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
             builder.append(method);
             builder.append("(\"");
             if (data != null) {
-                builder.append(Uri.encode(data));
+                builder.append(data);
             }
             builder.append("\")");
             mWebView.loadUrl(builder.toString());
@@ -163,6 +163,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         mWebView.loadUrl(getString(R.string.home_page));
+//        mWebView.loadUrl("file:///android_asset/index.html");
     }
 
     public boolean onInterceptUrl(String url) {
