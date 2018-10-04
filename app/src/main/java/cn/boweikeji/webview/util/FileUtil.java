@@ -1,4 +1,4 @@
-package cn.boweikeji.mmxy.util;
+package cn.boweikeji.webview.util;
 
 import android.util.Base64;
 

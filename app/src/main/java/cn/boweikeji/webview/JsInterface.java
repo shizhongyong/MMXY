@@ -1,4 +1,4 @@
-package cn.boweikeji.mmxy;
+package cn.boweikeji.webview;
 
 import android.app.Activity;
 import android.content.Context;
@@ -9,24 +9,19 @@ import android.os.Handler;
 import android.os.HandlerThread;
 import android.provider.MediaStore;
 import android.support.v4.content.FileProvider;
-import android.text.TextUtils;
-import android.util.Base64;
 import android.webkit.JavascriptInterface;
 
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import cn.boweikeji.mmxy.util.FileUtil;
-import cn.boweikeji.mmxy.util.ImageUtil;
+import cn.boweikeji.webview.util.FileUtil;
+import cn.boweikeji.webview.util.ImageUtil;
 
 /**
  * Created by shizy on 2018/6/4.

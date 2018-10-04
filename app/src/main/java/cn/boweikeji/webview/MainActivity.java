@@ -1,4 +1,4 @@
-package cn.boweikeji.mmxy;
+package cn.boweikeji.webview;
 
 import android.app.Activity;
 import android.content.ClipData;
