@@ -3,7 +3,7 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 26
     defaultConfig {
-        applicationId "cn.boweikeji.mmxy"
+        applicationId "cn.boweikeji.webview"
         minSdkVersion 14
         targetSdkVersion 22
         versionCode 1000000

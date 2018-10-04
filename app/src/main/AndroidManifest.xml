@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:tools="http://schemas.android.com/tools"
-	package="cn.boweikeji.mmxy">
+	package="cn.boweikeji.webview">
 
 	<uses-permission android:name="android.permission.INTERNET" />
 	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -17,7 +17,7 @@
 		android:roundIcon="@mipmap/ic_launcher"
 		android:supportsRtl="true"
 		android:theme="@style/AppTheme">
-		<activity android:name="cn.boweikeji.mmxy.MainActivity">
+		<activity android:name="cn.boweikeji.webview.MainActivity">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN" />
 
@@ -32,7 +32,7 @@
 
 		<provider
 			android:name="android.support.v4.content.FileProvider"
-			android:authorities="com.example.android.fileprovider"
+			android:authorities="${applicationId}.fileprovider"
 			android:exported="false"
 			android:grantUriPermissions="true">
 			<meta-data
